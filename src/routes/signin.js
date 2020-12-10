@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
   const { email, password } = req.body;
   // email과 password에 일치하는 user를 찾는다.
   const sql = `
-    SELECT id, email, name, admin 
+    SELECT id, email, name, account 
     FROM user WHERE email = ? AND password = ?`;
   
   try {
