@@ -1,19 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const db = require('../database/db');
+const { query } = require('../database/model');
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { email, password } = req.body;
   // email과 password에 일치하는 user를 찾는다.
-  const sql = 'SELECT * FROM user WHERE email = ? AND password = ?';
-  db.query(sql, [email, password], (error, results, fields) => {
-    if (error) return res.status(500).send(error.message);
-    if (results.length < 1) return res.status(404).send('아이디나 비밀번호가 틀렸습니다.');
-
-    const token = jwt.sign({ email: 1, name: 'kimjiyoung' }, 'secretKey');
+  const sql = `
+    SELECT id, email, name, admin 
+    FROM user WHERE email = ? AND password = ?`;
+  
+  try {
+    const results = await query(sql, [email, password]);
+    if (results.length !== 1) return res.status(404).send('아이디나 비밀번호가 틀렸습니다.');
+    
+    const token = jwt.sign(JSON.stringify(results[0]), 'secretKey');
     res.header('x-auth-token', token).status(200).send('ok');
-  });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 module.exports = router;
