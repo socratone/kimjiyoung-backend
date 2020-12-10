@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
     const results = await query(sql, [email, password]);
     if (results.length !== 1) return res.status(404).send('아이디나 비밀번호가 틀렸습니다.');
     
-    const token = jwt.sign(JSON.stringify(results[0]), 'secretKey');
+    const token = jwt.sign(JSON.stringify(results[0]), process.env.JWT_SECRET);
     res.header('x-auth-token', token).status(200).send('ok');
   } catch (error) {
     res.status(500).send(error.message);
