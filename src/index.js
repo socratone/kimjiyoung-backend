@@ -10,6 +10,7 @@ app.use(cors());
 
 app.use(express.json()); 
  
+app.use('/api/signup', routes.signup);
 app.use('/api/signin', routes.signin);
 app.use('/api/signout', routes.signout);
 app.use('/api/items', routes.items);
