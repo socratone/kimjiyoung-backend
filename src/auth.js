@@ -5,7 +5,7 @@ const auth = (req, res, next) => {
   if (!token) return res.status(401).send('토큰이 없습니다.');
 
   try {
-    const decoded = jwt.verify(token, 'secretKey');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // 디코딩이 잘 되면 user 객체에 담아 다음으로 넘겨준다.
     next();
   } catch (error) {
