@@ -29,7 +29,14 @@ router.post('/', async (req, res) => {
       account: results[0].account 
     };
 
-    const token = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET);
+    const token = jwt.sign(
+      {
+        exp: Math.floor(Date.now() / 1000) + (60 * 60), // 1시간
+        data: JSON.stringify(user)
+      }, 
+      process.env.JWT_SECRET
+    );
+
     res.status(200).send({ message: '로그인에 성공했습니다.', token });
   } catch (error) {
     res.status(500).send({ message: error.message });
