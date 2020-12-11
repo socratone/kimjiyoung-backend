@@ -12,21 +12,21 @@ router.post('/', async (req, res) => {
     FROM user WHERE email = ?`;
   
   try {
-    const results = await query(sql, [email]);
-    if (results.length !== 1) {
+    const users = await query(sql, [email]);
+    if (users.length !== 1) {
       return res.status(400).send({ message: '가입하지 않은 사용자입니다.' });
     }
     
-    const isSame = await bcrypt.compare(password, results[0].password);
+    const isSame = await bcrypt.compare(password, users[0].password);
     if (!isSame) {
       return res.status(400).send({ message: '아이디나 비밀번호가 틀렸습니다.' });
     }
 
     const user = { 
-      id: results[0].id, 
-      email: results[0].email, 
-      name: results[0].name, 
-      account: results[0].account 
+      id: users[0].id, 
+      email: users[0].email, 
+      name: users[0].name, 
+      account: users[0].account 
     };
 
     const token = jwt.sign(
