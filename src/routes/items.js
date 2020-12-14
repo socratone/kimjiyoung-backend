@@ -11,7 +11,8 @@ router.get('/', async (req, res) => {
     categorys.forEach(category => sacredThings[category.name] = { items: [] });
 
     const sql2 = `
-      SELECT i.id, title, description, price, main_image_URL AS mainImage, 
+      SELECT i.id, title, description, price, 
+        main_image_URL AS mainImage, sub_image_URLs AS subImages,
         smart_store AS smartStore, created_at AS createdAt,
         c.name AS category, item_order AS 'order' 
       FROM item i
