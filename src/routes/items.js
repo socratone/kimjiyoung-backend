@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
         c.name AS category, item_order AS 'order' 
       FROM item i
       JOIN category c ON category_id = c.id
-      ORDER BY category_id, item_order`;
+      ORDER BY category_id, item_order DESC`;
     const items = await query(sql2);
 
     for (let key in sacredThings) {
