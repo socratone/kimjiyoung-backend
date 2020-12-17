@@ -32,4 +32,15 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql = 'DELETE FROM item WHERE id = ?';
+    const results = await query(sql, [id]);
+    res.status(200).send(results);
+  } catch (error) {
+    res.status(500).send({ error: { message: error.message }});
+  }
+});
+
 module.exports = router;
