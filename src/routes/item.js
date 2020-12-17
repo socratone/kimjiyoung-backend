@@ -15,9 +15,13 @@ router.post('/', async (req, res) => {
     const categoryId = results[0].id;
 
     // item_order 중 가장 큰 숫자를 찾아 1을 더한다.
-    const sql2 = 'SELECT MAX(item_order) AS maxOrder FROM item';
-    const results2 = await query(sql2);
-    const itemOrder = results2[0].maxOrder + 1;
+    const sql2 = `
+      SELECT MAX(item_order) AS maxOrder FROM item
+      WHERE category_id = ?`;
+    const results2 = await query(sql2, [categoryId]);
+    let itemOrder = results2[0].maxOrder;
+    if (itemOrder) itemOrder++;
+    else itemOrder = 1;
 
     // insert
     const sql3 = `
