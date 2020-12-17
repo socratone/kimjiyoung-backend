@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 
     res.status(200).send(sacredThings);
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    res.status(500).send({ error: { message: error.message }}); // 그냥 error는 안 보내진다.
   }
 });
 
