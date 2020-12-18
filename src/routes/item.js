@@ -6,7 +6,7 @@ router.post('/', async (req, res) => {
   let { title, description, price, category, storeLink, imageFileName } = req.body;
   if (!description) description = null;
   if (!price) price = null;
-  if (!storeLink) price = null;
+  if (!storeLink) storeLink = null;
 
   try {
     // category에 해당하는 id를 알아낸다.
@@ -46,5 +46,24 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send({ error: { message: error.message }});
   }
 });
+
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    let { title, description, price, storeLink } = req.body;
+    if (!description) description = null;
+    if (!price) price = null;
+    if (!storeLink) storeLink = null;
+    
+    const sql = `
+      UPDATE item
+      SET title = ?, description = ?, price = ?, smart_store = ?
+      WHERE id = ?`;
+    const results = await query(sql, [title, description, price, storeLink, id]);
+    res.status(200).send(results);
+  } catch (error) {
+    res.status(500).send({ error: { message: error.message }});
+  }
+})
 
 module.exports = router;
