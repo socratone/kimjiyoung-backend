@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
     const sql2 = `
       SELECT i.id, title, description, price, 
-        main_image_URL AS mainImage, sub_image_URLs AS subImages,
+        main_image AS mainImage, sub_images AS subImages,
         smart_store AS smartStore, created_at AS createdAt,
         c.name AS category, item_order AS 'order' 
       FROM item i

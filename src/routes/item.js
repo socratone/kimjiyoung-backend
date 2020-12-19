@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 
     // insert
     const sql3 = `
-      INSERT INTO item (title, description, price, category_id, main_image_URL, 
+      INSERT INTO item (title, description, price, category_id, main_image, 
         smart_store, item_order, created_at) 
       VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`;
     const results3 = await query(sql3, [title, description, price, categoryId, imageFileName, storeLink, itemOrder]);
@@ -71,7 +71,7 @@ router.put('/images/:id', async (req, res) => {
     const { id } = req.params;
     let { subImages } = req.body;
     
-    const sql = 'UPDATE item SET sub_image_URLs = ? WHERE id = ?';
+    const sql = 'UPDATE item SET sub_images = ? WHERE id = ?';
     const results = await query(sql, [subImages, id]);
     res.status(200).send(results);
   } catch (error) {
