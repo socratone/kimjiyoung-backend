@@ -64,6 +64,19 @@ router.put('/:id', async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: { message: error.message }});
   }
-})
+});
+
+router.put('/images/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    let { subImages } = req.body;
+    
+    const sql = 'UPDATE item SET sub_image_URLs = ? WHERE id = ?';
+    const results = await query(sql, [subImages, id]);
+    res.status(200).send(results);
+  } catch (error) {
+    res.status(500).send({ error: { message: error.message }});
+  }
+});
 
 module.exports = router;
