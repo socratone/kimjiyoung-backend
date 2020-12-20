@@ -14,12 +14,12 @@ router.post('/', async (req, res) => {
   try {
     const users = await query(sql, [email]);
     if (users.length !== 1) {
-      return res.status(400).send({ message: '가입하지 않은 사용자입니다.' });
+      return res.status(400).send({ error: { message: '가입하지 않은 사용자입니다.' }});
     }
     
     const isSame = await bcrypt.compare(password, users[0].password);
     if (!isSame) {
-      return res.status(400).send({ message: '아이디나 비밀번호가 틀렸습니다.' });
+      return res.status(400).send({ error: { message: '아이디나 비밀번호가 틀렸습니다.' }});
     }
 
     const user = { 
@@ -31,15 +31,15 @@ router.post('/', async (req, res) => {
 
     const token = jwt.sign(
       {
-        exp: Math.floor(Date.now() / 1000) + (60 * 60), // 1시간
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7), // 1시간 * 24시간 * 7시간
         data: JSON.stringify(user)
       }, 
       process.env.JWT_SECRET
     );
 
-    res.status(200).send({ message: '로그인에 성공했습니다.', token });
+    res.status(200).send({ token });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ error: { message: error.message }});
   }
 });
 
