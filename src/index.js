@@ -14,5 +14,6 @@ app.use('/api/signup', routes.signup);
 app.use('/api/signin', routes.signin);
 app.use('/api/items', routes.items);
 app.use('/api/item', auth, routes.item);
+app.use('/api/profile', routes.profile);
 
 app.listen(3001, () => console.log('서버가 3001 포트에서 가동 중입니다.'));
