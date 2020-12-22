@@ -44,3 +44,13 @@ CREATE TABLE profile (
     UNIQUE (image),
     PRIMARY KEY (id)
 );
+
+-- 테이블에 먼저 들어가야 할 값들
+
+INSERT INTO category (id, name) VALUES (1, 'statue');
+INSERT INTO category (id, name) VALUES (2, 'cross');
+INSERT INTO category (id, name) VALUES (3, 'tools');
+
+INSERT INTO profile (sort, image) VALUES ('main', 'first-item.png');
+INSERT INTO profile (sort, image) VALUES ('main', 'second-item.png');
+INSERT INTO profile (sort, image) VALUES ('main', 'third-item.png');
