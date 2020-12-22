@@ -55,4 +55,15 @@ router.post('/item', auth, async (req, res) => {
   }
 });
 
+router.delete('/item/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql = 'DELETE FROM profile WHERE id = ?';
+    const results = await query(sql, [id]);
+    res.status(200).send(results);
+  } catch (error) {
+    res.status(500).send({ error: { message: error.message }});
+  }
+});
+
 module.exports = router;
