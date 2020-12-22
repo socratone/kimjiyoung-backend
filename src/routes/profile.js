@@ -16,14 +16,14 @@ router.get('/', async (req, res) => {
     };
 
     for (let i = 0; i < results.length; i++) {
-      if (!results[i].image) {
-        profile.items.push(results[i]);
-      } else if (results[i].image === 'first-item.png') {
+      if (results[i].image === 'first-item.png') {
         profile.firstItem['text'] = results[i].word;
       } else if (results[i].image === 'second-item.png') {
         profile.secondItem['text'] = results[i].word;
       } else if (results[i].image === 'third-item.png') {
         profile.thirdItem['text'] = results[i].word;
+      } else {
+        profile.items.push(results[i]);
       }
     }
 
